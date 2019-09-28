@@ -8,3 +8,5 @@ Last Modified: September 28, 2019
 '''
 
 import pytest
+
+from process_audio import process_audio
