@@ -27,6 +27,8 @@ TODO:
 2. Think about output format for list_songs
 3. Understand the types of features that will be made from the raw audio
 4. Figure out how the database will be searched with features for search()
+5. Relax the exisiting database assumption.
+6. Decide if songs should only be searchable by unqiue song ID.
 
 """
 
@@ -35,24 +37,30 @@ import psycopg2
 class databaseTool:
     """ 
     Establishes functionality with Postgres Database 
+
+    Assumptions:
+        There already exists a postgresql database on the local system.
     
     Parameters:
         connect_to_db (bool) : Flag to connect to db in init.
     """
 
-    def __init__(self, connect_to_db=True):
+    def __init__(self, 
+        db_user, db_user_pwd, db_nm, 
+        db_host='localhost', db_port=5432, connect_to_db=True
+    ):
 
         # set DB connect parameters
-        self.db_user=''
-        self.db_user_pwd=''
-        self.db_host='localhost'
-        self.db_port=5432
-        self.database_nm=''
+        self.db_user=db_user
+        self.db_user_pwd=db_user_pwd
+        self.db_nm=db_nm
+        self.db_host=db_host
+        self.db_port=db_port
 
         # connect to postgres DB
         if connect_to_db:
             self.con = connect_to_db(
-                database=self.database_nm,
+                database=self.db_nm,
                 user=self.db_user,
                 password=self.db_user_pwd,
                 host=self.db_host,
@@ -86,19 +94,33 @@ class databaseTool:
             port=db_port
         )
 
+    def song_in_db(self, song_id):
+        """
+        Checks if a song currently exists in database by unique song id.
 
-    def add_song(self, audio_file, song_title, artist, album):
+        Parameters:
+            song_id (int) : unique id of song we want to search
+
+        Returns:
+            dict : dictionary with song information (song id, song_format, etc)
+
+        TODO: 
+         - should existence of songs only be searchable by id?
+        """
+        pass
+
+    def add_song(self, song_filepath, song_title, artist, album):
         """
         Adds raw audio file to database library.
 
         Parameters:
-            audio_file (.wav) : song to be uploaded to the database.
+            song_filepath (str) : path to song to be uploaded to the database.
             song_title (str) : upload song title.
             artist (str) : upload song artist.
             album (str) : upload song album name.
 
         Returns:
-            None : File and meta data are written to DB
+            int : the unique ID of the song just added.
         """
         pass
 
@@ -127,7 +149,7 @@ class databaseTool:
         """
         pass
 
-    def create_song_features(self, song_id):
+    def create_song_features(self, song_id, test_out=False):
         """
         Creates features from raw audio file.
 
@@ -135,6 +157,8 @@ class databaseTool:
 
         Parameters:
             song_id (int) : unique id of song for which we create features.
+            test_out (bool) : lets function return the generated features for
+                unit testing purposes.
 
         Returns:
             None : specified audio file and metadata are deleted from database.
