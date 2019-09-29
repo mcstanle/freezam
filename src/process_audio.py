@@ -62,12 +62,12 @@ class signatureGenerator:
 
         #TODO: add more signature methods
 
-    def generate_signature(self, audio_ts):
+    def generate_signature(self, periodogram):
         """
         Wrapper around all the above signature generating functions.
 
         Parameters:
-            audio_ts (numpy array): time series for which we want to generate signature
+            audio_ts (numpy array): periodogram for which we'll generate signature
 
         Returns:
             generated signature (output varies)
