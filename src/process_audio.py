@@ -87,8 +87,8 @@ class processAudio:
     Note, this class doesn't have any read capabilities because that taks is 
     handled by the database class.
     """
-    def __init__(
-        self, window_type, window_size, window_shift, 
+    def __init__(self, 
+        window_type, window_size, window_shift, 
         signature_type
     ):
         self.window_type=window_type

@@ -34,6 +34,8 @@ TODO:
 
 import psycopg2
 
+from utils import *
+
 class databaseTool:
     """ 
     Establishes functionality with Postgres Database 
