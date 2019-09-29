@@ -1,5 +1,5 @@
 '''
-Unit tests for database_tool components.
+Unit tests for databaseTool components.
 
 ===============================================================================
 Author:        Mike Stanley
